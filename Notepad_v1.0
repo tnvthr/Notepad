@@ -1,0 +1,149 @@
+var menu = null;
+var ctx = com.mojang.minecraftpe.MainActivity.currentMainActivity.get();
+var btn = null;
+function saveFile(path,content,bool){try{var file = new java.io.File(path); if(!file.exists()){ return null;}
+	var fw = new java.io.FileWriter(file,bool);
+	var bw = new java.io.BufferedWriter(fw);
+	var str = new java.lang.String(content);
+	bw.write(str); bw.close(); fw.close();
+}catch(e){clientMessage(e);
+	}
+}function makeFolder(path){try{var file = new java.io.File(path); if(!file.exists()){file.mkdir(); print(" "+path+" 폴더생성");}else{print("맵에 입장 중입니다."); }}catch(e){clientMessage(e); }}
+function readFile(path){try{var file = new java.io.File(path); if(!(file.exists())) return null;
+	var fis = new java.io.FileInputStream(file);
+	var isr = new java.io.InputStreamReader(fis);
+	var br = new java.io.BufferedReader(isr);
+	var s = br.readLine();
+	var read = "";
+	while((read = br.readLine()) !== null) s += "\n" + read;
+	fis.close(); isr.close(); br.close();
+	return s;
+}catch(error){print("error : " + error);
+}}function dip2px(ctx, dips){
+return Math.ceil(dips * ctx.getResources().getDisplayMetrics().density);
+}function newLevel(){newnt(); makeFolder("/storage/emulated/0/games/com.mojang/Notepad"); java.lang.Thread.sleep(1000); const sdcard = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+var files= new java.io.File(sdcard+"/games/com.mojang/Notepad/Notepad_1.txt");
+var filec= new java.io.File(sdcard+"/games/com.mojang/Notepad/Notepad_2.txt");
+files.createNewFile(); filec.createNewFile(); }
+function newnt(){
+ctx.runOnUiThread(new java.lang.Runnable({ run: function() {try{
+btn = new android.widget.PopupWindow();
+var layout = new android.widget.RelativeLayout(ctx);
+var button = new android.widget.Button(ctx);
+button.setText("NT");
+button.setOnClickListener(new android.view.View.OnClickListener({onClick: function(v) {if(menu==null){openMenu(); removeButton();
+}else if(menu!=null){closeMenu();
+}}}));
+layout.addView(button);
+btn.setContentView(layout);
+btn.setWidth(dip2px(ctx, 40)); //가로
+btn.setHeight(dip2px(ctx, 30)); //세로
+btn.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.TRANSPARENT)); //투명
+btn.showAtLocation(ctx.getWindow().getDecorView(), android.view.Gravity.RIGHT | android.view.Gravity.BOTTOM, 0, 0); //위치
+}catch(e){clientMessage(e+", "+e.lineNumber);
+}}}));
+}function leaveGame(){
+removeButton();
+closeMenu(); }function openMenu(){ctx.runOnUiThread(new java.lang.Runnable({run : function(){try{menu = new android.widget.PopupWindow();
+var title = new android.widget.TextView(ctx);
+var layout = new android.widget.LinearLayout(ctx); layout.setOrientation(1);
+title.setText("메모지");
+title.setTextColor(android.graphics.Color.parseColor('#FFFFFF'));
+title.setTextSize(23);
+title.setGravity(android.view.Gravity.CENTER); layout.addView(title);
+var nt_1 = new android.widget.Button(ctx);
+var nt_2 = new android.widget.Button(ctx);
+var Details = new android.widget.Button(ctx);
+var exit = new android.widget.Button(ctx);
+nt_1.setText("[메모지_1]");
+nt_1.setTextColor(android.graphics.Color.parseColor('#FB7D07'));
+nt_2.setText("[메모지_2]");
+nt_2.setTextColor(android.graphics.Color.parseColor('#FB7D07'));
+Details.setText("[세부사항]");
+Details.setTextColor(android.graphics.Color.parseColor('#008FE0'));
+exit.setText("[닫기]");
+exit.setTextColor(android.graphics.Color.parseColor('#1E3FFF'));
+nt_1.setOnClickListener(new android.view.View.OnClickListener(){onClick: function(v){nt1();
+}});
+nt_2.setOnClickListener(new android.view.View.OnClickListener(){onClick: function(v){nt2();
+}});
+Details.setOnClickListener(new android.view.View.OnClickListener(){onClick: function(v){Detailsc();
+}});
+exit.setOnClickListener(new android.view.View.OnClickListener(){onClick: function(v){menu.dismiss(); menu = null; newnt();
+}});
+layout.addView(nt_1);
+layout.addView(nt_2);
+layout.addView(Details)
+layout.addView(exit);
+var scroll = new android.widget.ScrollView(ctx);
+scroll.addView(layout);
+menu.setContentView(scroll);
+menu.setBackgroundDrawable(new android.graphics.drawable.ColorDrawable(android.graphics.Color.DKGRAY)); //메뉴 컬러
+menu.setWidth(ctx.getWindowManager().getDefaultDisplay().getWidth()*2/6);
+menu.setHeight(ctx.getWindowManager().getDefaultDisplay().getHeight()*1/2);
+menu.showAtLocation(ctx.getWindow().getDecorView(),android.view.Gravity.RIGHT|android.view.Gravity.TOP, 0, 0); //위치
+}catch(e){clientMessage(e+", "+e.lineNumber);
+}}}));
+}function closeMenu(){ctx.runOnUiThread(new java.lang.Runnable({run : function(){try{if(menu!=null){menu.dismiss(); menu = null;
+}}catch(e){clientMessage(e+", "+e.lineNumber);
+}}}));
+}function removeButton(){ctx.runOnUiThread(new java.lang.Runnable({run: function(){try{if(btn!=null){btn.dismiss();
+btn = null; }}catch(e){clientMessage(e+", "+e.lineNumber); }}}));
+}function ntt(){ctx.runOnUiThread(new java.lang.Runnable({ run: function(){try{var dialog = new android.app.AlertDialog.Builder(ctx); var layout = new android.widget.LinearLayout(ctx);
+layout.setOrientation(1);
+layout.setGravity(android.view.Gravity.CENTER);
+var textv = new android.widget.TextView(ctx);
+var  texte= new android.widget.EditText(ctx);
+textv.setText("메모: "); textv.setTextColor(android.graphics.Color.parseColor('#2BD3A4')); textv.setTextSize(18);
+texte.setHint("메모하실 글을 써주세요.");
+layout.addView(textv); layout.addView(texte);
+var scroll = android.widget.ScrollView(ctx);
+scroll.addView(layout); dialog.setView(scroll);
+dialog.setTitle("메모장 1페이지");
+dialog.setNegativeButton("취소", null);
+dialog.setPositiveButton("확인", new android.content.DialogInterface.OnClickListener({onClick: function(){saveFile("/storage/emulated/0/games/com.mojang/Notepad/Notepad_1.txt", texte.getText(),false); print("메모내용이 수정되었습니다.")}}));
+dialog.show(); }catch(e){clientMessage(e+", "+e.lineNumber); }}}));
+}function nt1(){ctx.runOnUiThread(new java.lang.Runnable({run: function(){try{
+var dialog = new android.app.AlertDialog.Builder(ctx);
+b = readFile("/storage/emulated/0/games/com.mojang/Notepad/Notepad_1.txt");
+dialog.setTitle("메모장_1페이지");
+dialog.setMessage("내용: "+b);
+dialog.setNegativeButton("뒤로", null);
+dialog.setPositiveButton("수정", new android.content.DialogInterface.OnClickListener({onClick: function(v){
+ntt(); }}));
+dialog.show(); }catch(e){clientMessage(e+", "+e.lineNumber); }}}));
+}function nt2(){ctx.runOnUiThread(new java.lang.Runnable({run: function(){try{
+var dialog = new android.app.AlertDialog.Builder(ctx);
+t = readFile("/storage/emulated/0/games/com.mojang/Notepad/Notepad_2.txt");
+dialog.setTitle("메모장_2페이지");
+dialog.setMessage("내용: "+t);
+dialog.setNegativeButton("뒤로", null);
+dialog.setPositiveButton("수정", new android.content.DialogInterface.OnClickListener({onClick: function(v){ntt2(); }})); dialog.show(); }catch(e){clientMessage(e+", "+e.lineNumber); }}}));
+}function ntt2(){
+ctx.runOnUiThread(new java.lang.Runnable({ run: function(){try{
+var dialog = new android.app.AlertDialog.Builder(ctx);
+var layout = new android.widget.LinearLayout(ctx);
+layout.setOrientation(1);
+layout.setGravity(android.view.Gravity.CENTER);
+var textv = new android.widget.TextView(ctx);
+var  texte= new android.widget.EditText(ctx);
+textv.setText("메모: ");
+textv.setTextColor(android.graphics.Color.parseColor('#2BD3A4'));
+textv.setTextSize(18);
+texte.setHint("메모하실 글을 써주세요.");
+layout.addView(textv); layout.addView(texte);
+var scroll = android.widget.ScrollView(ctx);
+scroll.addView(layout); dialog.setView(scroll);
+dialog.setTitle("메모장 2페이지");
+dialog.setNegativeButton("취소", null);
+dialog.setPositiveButton("확인", new android.content.DialogInterface.OnClickListener({onClick: function(){saveFile("/storage/emulated/0/games/com.mojang/Notepad/Notepad_2.txt", texte.getText(),false); print("메모내용이 수정되었습니다.")}}));
+dialog.show();
+}catch(e){clientMessage(e+", "+e.lineNumber); }}}));
+}
+function Detailsc(){ctx.runOnUiThread(new java.lang.Runnable({run: function(){try{
+var dialog = new android.app.AlertDialog.Builder(ctx); dialog.setTitle("[Notepad] 세부사항"); dialog.setMessage("Name: Notepad\nVersion: 1.0\nAuthor: 숲속(shfwk1210@naver.com)\nGitHub: Woods(https://github.com/tnvthr)\nThe total production time: \n2016/04/24/ 09h.25m ~ \n2016/04/24 16h.07m\n");
+dialog.setNegativeButton("뒤로", null);
+dialog.show();
+}catch(e){clientMessage(e+", "+e.lineNumber);
+}}}));
+}
